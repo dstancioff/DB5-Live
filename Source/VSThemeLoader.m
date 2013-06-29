@@ -29,7 +29,10 @@
 	
     self.lastThemeModificationDate = [[NSDate date] timeIntervalSinceReferenceDate];
     [self loadThemes];
+    
+#if TARGET_IPHONE_SIMULATOR
     [NSTimer scheduledTimerWithTimeInterval:.3 target:self selector:@selector(pollFileSystem:) userInfo:nil repeats:YES];
+#endif
 	return self;
 }
 
