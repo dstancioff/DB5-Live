@@ -130,6 +130,7 @@
 				844CCE09177B6B5900B8BDF0 /* Sources */,
 				844CCE0A177B6B5900B8BDF0 /* Frameworks */,
 				844CCE0B177B6B5900B8BDF0 /* Resources */,
+				0EB61E17177E865F0033C8F3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -182,6 +183,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0EB61E17177E865F0033C8F3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". $SRCROOT/../Source/VSSymlinkThemesScript.sh";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		844CCE09177B6B5900B8BDF0 /* Sources */ = {

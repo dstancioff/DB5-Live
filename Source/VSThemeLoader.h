@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef void(^ThemeReloadedCallback)(void);
 
 @class VSTheme;
 
@@ -15,7 +15,8 @@
 
 @property (nonatomic, strong, readonly) VSTheme *defaultTheme;
 @property (nonatomic, strong, readonly) NSArray *themes;
+@property (nonatomic, copy) ThemeReloadedCallback themeReloadedCallback;
 
 - (VSTheme *)themeNamed:(NSString *)themeName;
-
+- (void)loadThemes;
 @end

@@ -23,15 +23,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	
- 	self.themeLoader = [VSThemeLoader new];
-    self.theme = self.themeLoader.defaultTheme;
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
- 	self.viewController = [[DB5ViewController alloc] initWithNibName:@"DB5ViewController" bundle:nil theme:self.theme];
-	self.window.rootViewController = self.viewController;
+    self.themeLoader = [VSThemeLoader new];
+    [self reloadViewController];
     [self.window makeKeyAndVisible];
-	
+    
+    
     return YES;
 }
+
+- (void)reloadViewController
+{
+    [self.themeLoader loadThemes];
+    self.theme = self.themeLoader.defaultTheme;
+    __weak DB5AppDelegate* wself = self;
+    self.themeLoader.themeReloadedCallback = ^{[wself reloadViewController];};
+    self.viewController = [[DB5ViewController alloc] initWithNibName:@"DB5ViewController" bundle:nil theme:self.theme];
+    self.window.rootViewController = self.viewController;
+}
+
+
 
 @end
