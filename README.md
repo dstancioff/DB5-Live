@@ -1,3 +1,31 @@
+# DB5 Live
+
+A version of DB5 that supports live updating of values from the plist while running the app on the simulator. Now you can make dozens of tweaks to your app in a matter of minutes!
+
+See the demo app for an example:
+1. Run the demo app
+2. Change a value in the plist, and save it
+3. Watch the app change before your eyes!
+
+Note that this will not work on device.
+
+To add it to your app:
+1. Restructure your app delegate (or wherever you load VSThemes in your app) so that you can "refresh" your UI.
+2. From this method, call `[themeLoader loadThemes];`
+3. Register for file changes by setting the themeReloadedCallback block on themeLoader and have it refresh your UI.
+4. Add a `Run Script` build step to your target:
+    . $SRCROOT/../Source/VSSymlinkThemesScript.sh
+See the demo app for an example, just look at the App Delegate
+
+How it works:
+After your app builds, the build script deletes your DB5.plist, and replaces it with a symlink to the source copy. On the simulator, this allows the app to load the updated file without rebuilding.
+
+The code adds the additional magic of watching the file for changes. If the file changes, the callback gets called, which typically will cause your app to refresh. 
+
+For more advanced usage, you could have this callback fire an NSNotification, so that individual View Controllers could reload themselves, rather than reloading the root view controller. This helps when working on a more complex app, as the feedback loop between change and result will be reduced to nearly zero.
+
+
+# Original README
 # DB5
 
 by [Q Branch](http://qbranch.co/)
