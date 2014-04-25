@@ -8,8 +8,10 @@ Pod::Spec.new do |s|
   s.homepage           = "http://www.github.com/dstancioff/DB5-Live"
   s.platform            = :ios, '7.0'
 
+
   s.requires_arc = true
 
   s.source_files = 'Source'
+  s.preserve_paths = "Source/*.sh"
 
 end
