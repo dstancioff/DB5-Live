@@ -3,6 +3,7 @@
 A version of DB5 that supports live updating of values from the plist while running the app on the simulator. Now you can make dozens of tweaks to your app in a matter of minutes!
 
 See the demo app for an example:
+
 1. Run the demo app
 2. Change a value in the plist, and save it
 3. Watch the app change before your eyes!
@@ -10,6 +11,7 @@ See the demo app for an example:
 Note that this will not work on device.
 
 To add it to your app:
+
 1. Restructure your app delegate (or wherever you load VSThemes in your app) so that you can "refresh" your UI.
 2. From this method, call `[themeLoader loadThemes];`
 3. Register for file changes by setting the themeReloadedCallback block on themeLoader and have it refresh your UI.
