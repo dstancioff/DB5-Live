@@ -21,6 +21,18 @@
 
 @implementation VSThemeLoader
 
++ (VSThemeLoader *)sharedThemeLoader
+{
+    static VSThemeLoader *_instance = nil;
+
+    @synchronized (self) {
+        if (_instance == nil) {
+            _instance = [[self alloc] init];
+        }
+    }
+
+    return _instance;
+}
 
 - (id)init {
     return [self initWithFileName:@"DB5"];
@@ -87,6 +99,7 @@
     NSTimeInterval modifiedTimeInterval = [modifiedDate timeIntervalSinceReferenceDate];
     if(self.lastThemeModificationDate > 0 && [modifiedDate timeIntervalSinceReferenceDate] > self.lastThemeModificationDate)
     {
+        [self loadThemes];
         self.themeReloadedCallback();
         NSLog(@"Themes Refreshed");
     }
