@@ -15,7 +15,7 @@
 @interface DB5AppDelegate ()
 
 @property (nonatomic, strong) VSThemeLoader *themeLoader;
-@property (nonatomic, strong) VSTheme *theme;
+
 @end
 
 
@@ -26,6 +26,8 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.themeLoader = [VSThemeLoader new];
+    __weak DB5AppDelegate* wself = self;
+    self.themeLoader.themeReloadedCallback = ^{[wself reloadViewController];};
     [self reloadViewController];
     [self.window makeKeyAndVisible];
     
@@ -36,10 +38,7 @@
 - (void)reloadViewController
 {
     [self.themeLoader loadThemes];
-    self.theme = self.themeLoader.defaultTheme;
-    __weak DB5AppDelegate* wself = self;
-    self.themeLoader.themeReloadedCallback = ^{[wself reloadViewController];};
-    self.viewController = [[DB5ViewController alloc] initWithNibName:@"DB5ViewController" bundle:nil theme:self.theme];
+    self.viewController = [[DB5ViewController alloc] initWithNibName:@"DB5ViewController" bundle:nil theme:self.themeLoader.defaultTheme];
     self.window.rootViewController = self.viewController;
 }
 
