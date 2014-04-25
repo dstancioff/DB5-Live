@@ -196,7 +196,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = ". $SRCROOT/../Source/VSSymlinkThemesScript.sh";
+			shellScript = ". $SRCROOT/../Source/VSSymlinkThemesScript.sh $SRCROOT/DB5Demo/DB5.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 

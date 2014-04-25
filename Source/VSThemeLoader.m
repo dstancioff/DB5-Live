@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readwrite) VSTheme *defaultTheme;
 @property (nonatomic, strong, readwrite) NSArray *themes;
 @property (nonatomic) NSTimeInterval lastThemeModificationDate;
+@property (nonatomic, copy) NSString *fileName;
 @end
 
 
@@ -22,11 +23,15 @@
 
 
 - (id)init {
-	
+    return [self initWithFileName:@"DB5"];
+}
+
+- (id)initWithFileName:(NSString*)fileName {
 	self = [super init];
 	if (self == nil)
 		return nil;
-	
+
+    self.fileName = fileName;
     self.lastThemeModificationDate = [[NSDate date] timeIntervalSinceReferenceDate];
     [self loadThemes];
     
@@ -38,7 +43,7 @@
 
 - (void)loadThemes
 {
-    NSString *themesFilePath = [[NSBundle mainBundle] pathForResource:@"DB5" ofType:@"plist"];
+    NSString *themesFilePath = [[NSBundle mainBundle] pathForResource:self.fileName ofType:@"plist"];
 	NSDictionary *themesDictionary = [NSDictionary dictionaryWithContentsOfFile:themesFilePath];
 	
 	NSMutableArray *themes = [NSMutableArray array];
