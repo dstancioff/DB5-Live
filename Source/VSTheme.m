@@ -117,9 +117,29 @@ static UIColor *colorWithHexString(NSString *hexString);
 		return cachedColor;
     
 	NSString *colorString = [self stringForKey:key];
-	UIColor *color = colorWithHexString(colorString);
+
+    UIColor *color;
+    // Support for RGB and RGBA in 255 (spaces ignored)
+    if ([colorString rangeOfString:@","].location != NSNotFound) {
+        colorString = [colorString stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSArray *colorComponents = [colorString componentsSeparatedByString:@","];
+        if ([colorComponents count] == 3 || [colorComponents count] == 4) {
+            float red = [colorComponents[0] floatValue] / 255.0;
+            float green = [colorComponents[1] floatValue] / 255.0;
+            float blue = [colorComponents[2] floatValue] / 255.0;
+            float alpha = 1.0;
+            if ([colorComponents count] == 4) {
+                alpha = [colorComponents[3] floatValue] / 255.0;
+            }
+            color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+        }
+    }
+    else
+    {
+        color = colorWithHexString(colorString);
+    }
 	if (color == nil)
-		color = [UIColor blackColor];
+		color = [UIColor purpleColor];
 
 	[self.colorCache setObject:color forKey:key];
 
