@@ -124,12 +124,12 @@ static UIColor *colorWithHexString(NSString *hexString);
         colorString = [colorString stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSArray *colorComponents = [colorString componentsSeparatedByString:@","];
         if ([colorComponents count] == 3 || [colorComponents count] == 4) {
-            float red = [colorComponents[0] floatValue] / 255.0;
-            float green = [colorComponents[1] floatValue] / 255.0;
-            float blue = [colorComponents[2] floatValue] / 255.0;
+            float red = [colorComponents[0] floatValue] / 255.0f;
+            float green = [colorComponents[1] floatValue] / 255.0f;
+            float blue = [colorComponents[2] floatValue] / 255.0f;
             float alpha = 1.0;
             if ([colorComponents count] == 4) {
-                alpha = [colorComponents[3] floatValue] / 255.0;
+                alpha = [colorComponents[3] floatValue] / 255.0f;
             }
             color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
         }
