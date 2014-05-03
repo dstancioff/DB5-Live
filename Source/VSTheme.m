@@ -188,7 +188,17 @@ static UIColor *colorWithHexString(NSString *hexString);
 
 
 - (CGPoint)pointForKey:(NSString *)key {
-
+    NSString *pointString = [self stringForKey:key];
+    if (pointString && [pointString rangeOfString:@","].location != NSNotFound) {
+        NSArray *pointComponents = [pointString componentsSeparatedByString:@","];
+        if ([pointComponents count] == 2) {
+            CGFloat x = [pointComponents[0] floatValue];
+            CGFloat y = [pointComponents[1] floatValue];
+            return CGPointMake(x, y);
+        }
+        NSLog(@"DB5: Unable to find point for key %@", key);
+        return CGPointZero;
+    }
 	CGFloat pointX = [self floatForKey:[key stringByAppendingString:@"X"]];
 	CGFloat pointY = [self floatForKey:[key stringByAppendingString:@"Y"]];
 
@@ -196,16 +206,41 @@ static UIColor *colorWithHexString(NSString *hexString);
 	return point;
 }
 
-
 - (CGSize)sizeForKey:(NSString *)key {
-
-	CGFloat width = [self floatForKey:[key stringByAppendingString:@"Width"]];
-	CGFloat height = [self floatForKey:[key stringByAppendingString:@"Height"]];
-
-	CGSize size = CGSizeMake(width, height);
-	return size;
+    NSString *sizeString = [self stringForKey:key];
+    if (sizeString && [sizeString rangeOfString:@","].location != NSNotFound) {
+        NSArray *sizeComponents = [sizeString componentsSeparatedByString:@","];
+        if ([sizeComponents count] == 2) {
+            CGFloat x = [sizeComponents[0] floatValue];
+            CGFloat y = [sizeComponents[1] floatValue];
+            return CGSizeMake(x, y);
+        }
+        NSLog(@"DB5: Unable to find size for key %@", key);
+        return CGSizeZero;
+    }
+    CGFloat width = [self floatForKey:[key stringByAppendingString:@"Width"]];
+    CGFloat height = [self floatForKey:[key stringByAppendingString:@"Height"]];
+    CGSize size = CGSizeMake(width, height);
+    return size;
 }
 
+- (CGRect)rectForKey:(NSString*)key {
+    NSString* rectString = [self stringForKey:key];
+    if (rectString && [rectString rangeOfString:@","].location != NSNotFound) {
+        NSArray *rectComponents = [rectString componentsSeparatedByString:@","];
+        if ([rectComponents count] == 4) {
+            CGFloat x = [rectComponents[0] floatValue];
+            CGFloat y = [rectComponents[1] floatValue];
+            CGFloat w = [rectComponents[2] floatValue];
+            CGFloat h = [rectComponents[3] floatValue];
+            return CGRectMake(x, y, w, h);
+        }
+        NSLog(@"DB5: Unable to find rect for key %@", key);
+        return CGRectZero;
+    }
+    return (CGRect){[self pointForKey:key], [self sizeForKey:key]};
+
+}
 
 - (UIViewAnimationOptions)curveForKey:(NSString *)key {
     
