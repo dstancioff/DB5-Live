@@ -26,6 +26,11 @@ The code adds the additional magic of watching the file for changes. If the file
 
 For more advanced usage, you could have this callback fire an NSNotification, so that individual View Controllers could reload themselves, rather than reloading the root view controller. This helps when working on a more complex app, as the feedback loop between change and result will be reduced to nearly zero.
 
+## Other Neat Things
+
+* A `CGRect`, `CGSize`, or a `CGPoint` can be defined using a string with comma syntax (ex. `0,0,30,20`)
+* `UIColor` can be written in RGB and RGBA using commas, in 255 format (ex. `255,0,0`)
+* `UIColor` has an optional alpha component when written in hex
 
 # Original README
 # DB5
