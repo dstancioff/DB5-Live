@@ -20,6 +20,7 @@ static UIColor *colorWithHexString(NSString *hexString);
 @property (nonatomic, strong) NSDictionary *themeDictionary;
 @property (nonatomic, strong) NSCache *colorCache;
 @property (nonatomic, strong) NSCache *fontCache;
+@property (nonatomic, strong) NSCache *shadowCache;
 
 @end
 
@@ -294,6 +295,23 @@ static UIColor *colorWithHexString(NSString *hexString);
 	return VSTextCaseTransformNone;
 }
 
+- (NSShadow *)shadowForKey:(NSString *)key {
+    
+    NSShadow *cachedShadow = [self.shadowCache objectForKey:key];
+    if (cachedShadow != nil) {
+        return cachedShadow;
+    }
+    
+    NSShadow *shadow = [NSShadow new];
+    
+    shadow.shadowOffset = [self sizeForKey:[key stringByAppendingString:@"Offset"]];
+    shadow.shadowColor = [self colorForKey:[key stringByAppendingString:@"Color"]];
+    shadow.shadowBlurRadius = [self floatForKey:[key stringByAppendingString:@"Radius"]];
+    
+    [self.shadowCache setObject:shadow forKey:key];
+    
+    return shadow;
+}
 
 @end
 
