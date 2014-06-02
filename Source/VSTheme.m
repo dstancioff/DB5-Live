@@ -8,6 +8,8 @@
 
 #import "VSTheme.h"
 
+#import "VSThemeLoader.h"
+
 
 static BOOL stringIsEmpty(NSString *s);
 static UIColor *colorWithHexString(NSString *hexString);
@@ -24,6 +26,10 @@ static UIColor *colorWithHexString(NSString *hexString);
 
 @implementation VSTheme
 
++ (instancetype)sharedTheme
+{
+    return [VSThemeLoader sharedThemeLoader].defaultTheme;
+}
 
 #pragma mark Init
 
