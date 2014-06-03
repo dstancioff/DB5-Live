@@ -51,7 +51,7 @@ static ThemesDidReloadHandler _themesReloadedHandler;
 	for (NSString *oneKey in themesDictionary)
     {
 		
-		VSTheme *theme = [[VSTheme alloc] initWithDictionary:themesDictionary[oneKey]];
+		VSTheme *theme = [[[self class] alloc] initWithDictionary:themesDictionary[oneKey]];
 		if ([[oneKey lowercaseString] isEqualToString:@"default"])
 			_defaultTheme = theme;
 		theme.name = oneKey;
