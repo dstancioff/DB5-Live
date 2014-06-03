@@ -13,7 +13,6 @@
 @interface DB5ViewController ()
 
 @property (strong, nonatomic) IBOutlet UILabel *label;
-@property (nonatomic, strong) VSTheme *theme;
 
 @end
 
@@ -21,28 +20,16 @@
 @implementation DB5ViewController
 
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil theme:(VSTheme *)theme {
-
-	self = [self initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self == nil)
-		return nil;
-
-	_theme = theme;
-
-	return self;
-}
-
-
 - (void)viewDidLoad {
 
-	self.view.backgroundColor = [self.theme colorForKey:@"backgroundColor"];
-	self.label.textColor = [self.theme colorForKey:@"labelTextColor"];
-	self.label.font = [self.theme fontForKey:@"labelFont"];
+	self.view.backgroundColor = [[VSTheme defaultTheme] colorForKey:@"backgroundColor"];
+	self.label.textColor = [[VSTheme defaultTheme] colorForKey:@"labelTextColor"];
+	self.label.font = [[VSTheme defaultTheme] fontForKey:@"labelFont"];
 
-	[self.theme animateWithAnimationSpecifierKey:@"labelAnimation" animations:^{
+	[[VSTheme defaultTheme] animateWithAnimationSpecifierKey:@"labelAnimation" animations:^{
 
 		CGRect rLabel = self.label.frame;
-		rLabel.origin = [self.theme pointForKey:@"label"];
+		rLabel.origin = [[VSTheme defaultTheme] pointForKey:@"label"];
 
 		self.label.frame = rLabel;
 		

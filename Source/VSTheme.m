@@ -8,8 +8,6 @@
 
 #import "VSTheme.h"
 
-#import "VSThemeLoader.h"
-
 
 static BOOL stringIsEmpty(NSString *s);
 static UIColor *colorWithHexString(NSString *hexString);
@@ -27,9 +25,92 @@ static UIColor *colorWithHexString(NSString *hexString);
 
 @implementation VSTheme
 
-+ (instancetype)sharedTheme
-{
-    return [VSThemeLoader sharedThemeLoader].defaultTheme;
+static VSTheme *_defaultTheme;
+static NSArray *_themes;
+static NSTimeInterval _lastThemesFileModificationDate;
+static ThemesDidReloadHandler _themesReloadedHandler;
+
++ (void)initialize {
+    
+    [self reloadThemes];
+    
+#if TARGET_IPHONE_SIMULATOR
+    [NSTimer scheduledTimerWithTimeInterval:.3 target:self selector:@selector(pollFileSystem:) userInfo:nil repeats:YES];
+#endif
+}
+
++ (void)reloadThemes {
+    
+    _lastThemesFileModificationDate = [[NSDate date] timeIntervalSinceReferenceDate];
+    NSString *fileName = @"DB5";
+
+    NSString *themesFilePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
+	NSDictionary *themesDictionary = [NSDictionary dictionaryWithContentsOfFile:themesFilePath];
+	
+	NSMutableArray *themes = [NSMutableArray array];
+	for (NSString *oneKey in themesDictionary)
+    {
+		
+		VSTheme *theme = [[VSTheme alloc] initWithDictionary:themesDictionary[oneKey]];
+		if ([[oneKey lowercaseString] isEqualToString:@"default"])
+			_defaultTheme = theme;
+		theme.name = oneKey;
+		[themes addObject:theme];
+	}
+    
+    for (VSTheme *oneTheme in themes)
+    { /*All themes inherit from the default theme.*/
+		if (oneTheme != _defaultTheme)
+			oneTheme.parentTheme = _defaultTheme;
+    }
+    
+	_themes = themes;
+    
+}
+
++ (void)pollFileSystem:(NSTimer*)timer {
+    
+#if TARGET_IPHONE_SIMULATOR
+    NSString *symlinkPath =
+    [[NSFileManager defaultManager]
+     destinationOfSymbolicLinkAtPath:[[NSBundle mainBundle] pathForResource:@"DB5" ofType:@"plist" inDirectory:nil]
+     error:NULL];
+    NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:symlinkPath error:nil];
+    NSDate *modifiedDate = [fileAttributes objectForKey:NSFileModificationDate];
+    NSTimeInterval modifiedTimeInterval = [modifiedDate timeIntervalSinceReferenceDate];
+    if (_lastThemesFileModificationDate > 0 && [modifiedDate timeIntervalSinceReferenceDate] > _lastThemesFileModificationDate)
+    {
+        [self reloadThemes];
+        if (_themesReloadedHandler)
+        {
+            _themesReloadedHandler();
+        }
+        NSLog(@"Themes Refreshed");
+    }
+    _lastThemesFileModificationDate = modifiedTimeInterval;
+#endif
+    
+}
+
++ (void)setThemesDidReloadHandler:(ThemesDidReloadHandler)block {
+    
+    _themesReloadedHandler = block;
+}
+
++ (VSTheme *)themeNamed:(NSString *)themeName {
+    
+	for (VSTheme *oneTheme in _themes)
+    {
+		if ([themeName isEqualToString:oneTheme.name])
+			return oneTheme;
+	}
+    
+	return nil;
+}
+
++ (instancetype)defaultTheme {
+    
+    return _defaultTheme;
 }
 
 #pragma mark Init
@@ -194,6 +275,25 @@ static UIColor *colorWithHexString(NSString *hexString);
 }
 
 
+- (NSShadow *)shadowForKey:(NSString *)key {
+    
+    NSShadow *cachedShadow = [self.shadowCache objectForKey:key];
+    if (cachedShadow != nil) {
+        return cachedShadow;
+    }
+    
+    NSShadow *shadow = [NSShadow new];
+    
+    shadow.shadowOffset = [self sizeForKey:[key stringByAppendingString:@"Offset"]];
+    shadow.shadowColor = [self colorForKey:[key stringByAppendingString:@"Color"]];
+    shadow.shadowBlurRadius = [self floatForKey:[key stringByAppendingString:@"Radius"]];
+    
+    [self.shadowCache setObject:shadow forKey:key];
+    
+    return shadow;
+}
+
+
 - (CGPoint)pointForKey:(NSString *)key {
     NSString *pointString = [self stringForKey:key];
     if (pointString && [pointString rangeOfString:@","].location != NSNotFound) {
@@ -213,6 +313,7 @@ static UIColor *colorWithHexString(NSString *hexString);
 	return point;
 }
 
+
 - (CGSize)sizeForKey:(NSString *)key {
     NSString *sizeString = [self stringForKey:key];
     if (sizeString && [sizeString rangeOfString:@","].location != NSNotFound) {
@@ -230,6 +331,7 @@ static UIColor *colorWithHexString(NSString *hexString);
     CGSize size = CGSizeMake(width, height);
     return size;
 }
+
 
 - (CGRect)rectForKey:(NSString*)key {
     NSString* rectString = [self stringForKey:key];
@@ -293,24 +395,6 @@ static UIColor *colorWithHexString(NSString *hexString);
 		return VSTextCaseTransformUpper;
 
 	return VSTextCaseTransformNone;
-}
-
-- (NSShadow *)shadowForKey:(NSString *)key {
-    
-    NSShadow *cachedShadow = [self.shadowCache objectForKey:key];
-    if (cachedShadow != nil) {
-        return cachedShadow;
-    }
-    
-    NSShadow *shadow = [NSShadow new];
-    
-    shadow.shadowOffset = [self sizeForKey:[key stringByAppendingString:@"Offset"]];
-    shadow.shadowColor = [self colorForKey:[key stringByAppendingString:@"Color"]];
-    shadow.shadowBlurRadius = [self floatForKey:[key stringByAppendingString:@"Radius"]];
-    
-    [self.shadowCache setObject:shadow forKey:key];
-    
-    return shadow;
 }
 
 @end

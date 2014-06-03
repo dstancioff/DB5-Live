@@ -11,9 +11,7 @@
 
 @class VSTheme;
 
+
 @interface DB5ViewController : UIViewController
-
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil theme:(VSTheme *)theme;
 
 @end

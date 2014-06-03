@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		840375F5177BD9A600188A0B /* VSTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 840375F2177BD9A600188A0B /* VSTheme.m */; };
-		840375F6177BD9A600188A0B /* VSThemeLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 840375F4177BD9A600188A0B /* VSThemeLoader.m */; };
 		840375F8177BDA9E00188A0B /* DB5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 840375F7177BDA9E00188A0B /* DB5.plist */; };
 		844CCE11177B6B5900B8BDF0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844CCE10177B6B5900B8BDF0 /* UIKit.framework */; };
 		844CCE13177B6B5900B8BDF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 844CCE12177B6B5900B8BDF0 /* Foundation.framework */; };
@@ -26,8 +25,6 @@
 /* Begin PBXFileReference section */
 		840375F1177BD9A600188A0B /* VSTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSTheme.h; path = ../../Source/VSTheme.h; sourceTree = "<group>"; };
 		840375F2177BD9A600188A0B /* VSTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSTheme.m; path = ../../Source/VSTheme.m; sourceTree = "<group>"; };
-		840375F3177BD9A600188A0B /* VSThemeLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VSThemeLoader.h; path = ../../Source/VSThemeLoader.h; sourceTree = "<group>"; };
-		840375F4177BD9A600188A0B /* VSThemeLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VSThemeLoader.m; path = ../../Source/VSThemeLoader.m; sourceTree = "<group>"; };
 		840375F7177BDA9E00188A0B /* DB5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DB5.plist; sourceTree = "<group>"; };
 		844CCE0D177B6B5900B8BDF0 /* DB5Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DB5Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		844CCE10177B6B5900B8BDF0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -96,8 +93,6 @@
 				844CCE28177B6B5900B8BDF0 /* DB5ViewController.h */,
 				844CCE29177B6B5900B8BDF0 /* DB5ViewController.m */,
 				844CCE2B177B6B5900B8BDF0 /* DB5ViewController.xib */,
-				840375F3177BD9A600188A0B /* VSThemeLoader.h */,
-				840375F4177BD9A600188A0B /* VSThemeLoader.m */,
 				840375F1177BD9A600188A0B /* VSTheme.h */,
 				840375F2177BD9A600188A0B /* VSTheme.m */,
 				840375F7177BDA9E00188A0B /* DB5.plist */,
@@ -209,7 +204,6 @@
 				844CCE21177B6B5900B8BDF0 /* DB5AppDelegate.m in Sources */,
 				844CCE2A177B6B5900B8BDF0 /* DB5ViewController.m in Sources */,
 				840375F5177BD9A600188A0B /* VSTheme.m in Sources */,
-				840375F6177BD9A600188A0B /* VSThemeLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
