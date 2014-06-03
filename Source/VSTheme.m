@@ -23,12 +23,16 @@ static UIColor *colorWithHexString(NSString *hexString);
 @end
 
 
+
+
 @implementation VSTheme
+
 
 static VSTheme *_defaultTheme;
 static NSArray *_themes;
 static NSTimeInterval _lastThemesFileModificationDate;
 static ThemesDidReloadHandler _themesReloadedHandler;
+
 
 + (void)initialize {
     
@@ -38,6 +42,7 @@ static ThemesDidReloadHandler _themesReloadedHandler;
     [NSTimer scheduledTimerWithTimeInterval:.3 target:self selector:@selector(pollFileSystem:) userInfo:nil repeats:YES];
 #endif
 }
+
 
 + (void)reloadThemes {
     
@@ -65,8 +70,8 @@ static ThemesDidReloadHandler _themesReloadedHandler;
     }
     
 	_themes = themes;
-    
 }
+
 
 + (void)pollFileSystem:(NSTimer*)timer {
     
@@ -92,10 +97,12 @@ static ThemesDidReloadHandler _themesReloadedHandler;
     
 }
 
+
 + (void)setThemesDidReloadHandler:(ThemesDidReloadHandler)block {
     
     _themesReloadedHandler = block;
 }
+
 
 + (VSTheme *)themeNamed:(NSString *)themeName {
     
@@ -108,10 +115,12 @@ static ThemesDidReloadHandler _themesReloadedHandler;
 	return nil;
 }
 
+
 + (instancetype)defaultTheme {
     
     return _defaultTheme;
 }
+
 
 #pragma mark Init
 
@@ -351,6 +360,7 @@ static ThemesDidReloadHandler _themesReloadedHandler;
 
 }
 
+
 - (UIViewAnimationOptions)curveForKey:(NSString *)key {
     
 	NSString *curveString = [self stringForKey:key];
@@ -396,6 +406,18 @@ static ThemesDidReloadHandler _themesReloadedHandler;
 
 	return VSTextCaseTransformNone;
 }
+
+
+- (BOOL)hasKey:(NSString *)key
+{
+	id obj = [self objectForKey:key];
+
+	if (obj == nil)
+		return NO;
+	
+	return YES;
+}
+
 
 @end
 

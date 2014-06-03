@@ -55,6 +55,8 @@ typedef void(^ThemesDidReloadHandler)(void);
 
 - (VSTextCaseTransform)textCaseTransformForKey:(NSString *)key; /*lowercase or uppercase -- returns VSTextCaseTransformNone*/
 
+- (BOOL)hasKey:(NSString *)key; /* YES if key exists */
+
 @end
 
 
