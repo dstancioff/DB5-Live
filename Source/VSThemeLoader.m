@@ -62,10 +62,13 @@
 	for (NSString *oneKey in themesDictionary) {
 		
 		VSTheme *theme = [[VSTheme alloc] initWithDictionary:themesDictionary[oneKey]];
-		if ([[oneKey lowercaseString] isEqualToString:@"default"])
-			_defaultTheme = theme;
-		theme.name = oneKey;
-		[themes addObject:theme];
+        theme.name = oneKey;
+		if ([[oneKey lowercaseString] isEqualToString:@"default"]) {
+            _defaultTheme = theme;
+        }
+        else {
+            [themes addObject:theme];
+        }
 	}
     
     for (VSTheme *oneTheme in themes) { /*All themes inherit from the default theme.*/
@@ -100,7 +103,9 @@
     if(self.lastThemeModificationDate > 0 && [modifiedDate timeIntervalSinceReferenceDate] > self.lastThemeModificationDate)
     {
         [self loadThemes];
-        self.themeReloadedCallback();
+        if (self.themeReloadedCallback) {
+            self.themeReloadedCallback();
+        }
         NSLog(@"Themes Refreshed");
     }
     self.lastThemeModificationDate = modifiedTimeInterval;

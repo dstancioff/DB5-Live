@@ -16,7 +16,9 @@ typedef void(^ThemeReloadedCallback)(void);
 @property (nonatomic, strong, readonly) VSTheme *defaultTheme;
 @property (nonatomic, strong, readonly) NSArray *themes;
 @property (nonatomic, copy) ThemeReloadedCallback themeReloadedCallback;
+- (id)initWithFileName:(NSString *)fileName;
 + (VSThemeLoader *)sharedThemeLoader;
 - (VSTheme *)themeNamed:(NSString *)themeName;
 - (void)loadThemes;
+
 @end
