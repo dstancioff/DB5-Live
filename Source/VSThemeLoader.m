@@ -95,7 +95,7 @@
 #if TARGET_IPHONE_SIMULATOR
     NSString *symlinkPath =
     [[NSFileManager defaultManager]
-     destinationOfSymbolicLinkAtPath:[[NSBundle mainBundle] pathForResource:@"DB5" ofType:@"plist" inDirectory:nil]
+     destinationOfSymbolicLinkAtPath:[[NSBundle mainBundle] pathForResource:self.fileName ofType:@"plist" inDirectory:nil]
      error:NULL];
     NSDictionary* fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:symlinkPath error:nil];
     NSDate* modifiedDate = [fileAttributes objectForKey:NSFileModificationDate];
